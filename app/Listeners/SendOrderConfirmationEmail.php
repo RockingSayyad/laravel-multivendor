@@ -1,26 +1,26 @@
 <?php
+// app/Listeners/SendOrderConfirmationEmail.php
 
 namespace App\Listeners;
 
 use App\Events\OrderPlaced;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
 class SendOrderConfirmationEmail
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Handle the event.
-     */
     public function handle(OrderPlaced $event): void
     {
-        //
+        $order    = $event->order;
+        $customer = $order->user;
+        $vendor   = $order->vendor;
+
+        // In production: Mail::to($customer)->send(new OrderConfirmationMail($order));
+        Log::info('[OrderPlaced] Confirmation email (mock)', [
+            'order_id'       => $order->id,
+            'customer_email' => $customer->email,
+            'vendor'         => $vendor->name,
+            'total'          => $order->total_amount,
+            'status'         => $order->status,
+        ]);
     }
 }
