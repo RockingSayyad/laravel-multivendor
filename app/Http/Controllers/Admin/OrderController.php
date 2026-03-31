@@ -1,7 +1,9 @@
 <?php
 // app/Http/Controllers/Admin/OrderController.php
 
+
 namespace App\Http\Controllers\Admin;
+use Illuminate\Routing\Controller as BaseController;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -9,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class OrderController extends Controller
+class OrderController extends BaseController
 {
     public function __construct()
     {
