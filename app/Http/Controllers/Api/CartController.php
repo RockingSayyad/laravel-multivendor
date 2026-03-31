@@ -71,23 +71,21 @@ class CartController extends Controller
     /**
      * PUT /api/cart/items/{cartItem}
      */
-    public function update(UpdateCartItemRequest $request, int $cartItemId): JsonResponse
-    {
-        try {
-            $item = $this->cartService->updateItem(
-                $request->user(),
-                $cartItemId,
-                $request->validated('quantity'),
-            );
+    public function update(UpdateCartItemRequest $request, $cartItemId): JsonResponse
+{
+    $cartItemId = (int) $cartItemId;
 
-            return response()->json([
-                'message' => 'Cart item updated.',
-                'item'    => $item->load('product'),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 422);
-        }
-    }
+    $item = $this->cartService->updateItem(
+        $request->user(),
+        $cartItemId,
+        $request->validated('quantity'),
+    );
+
+    return response()->json([
+        'message' => 'Cart item updated.',
+        'item'    => $item->load('product'),
+    ]);
+}
 
     /**
      * DELETE /api/cart/items/{cartItem}
