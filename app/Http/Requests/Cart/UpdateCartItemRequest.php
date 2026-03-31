@@ -1,29 +1,28 @@
 <?php
+// app/Http/Requests/Cart/UpdateCartItemRequest.php
 
 namespace App\Http\Requests\Cart;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCartItemRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return $this->user() !== null;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'quantity' => 'required|integer|min:0|max:100',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'quantity.min' => 'Quantity cannot be negative. Use 0 to remove the item.',
         ];
     }
 }
